@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>English Spur - Word Puzzle</title>
     <style>
         * {
@@ -15,50 +15,54 @@
         body {
             background-color: #0B132B;
             color: #F8FAFC;
-            height: 100vh;
-            overflow: hidden;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
+            justify-content: flex-start;
+            padding: 0.5rem;
+            overflow-x: hidden;
         }
 
         /* CLEAN NAVBAR WITH BRAND & GAME TITLE */
         .navbar {
             width: 100%;
-            height: 60px;
+            max-width: 500px;
+            height: 48px;
             background-color: #1C2541;
             border-bottom: 3px solid #FF6B00;
-            padding: 0 1rem;
+            padding: 0 0.8rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 1000;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
         }
 
         .brand-container {
             display: flex;
             align-items: center;
-            gap: 0.6rem;
+            gap: 0.5rem;
             cursor: pointer;
         }
 
         .brand-logo {
-            width: 36px;
-            height: 36px;
+            width: 28px;
+            height: 28px;
             background-color: #FF6B00;
             color: #FFFFFF;
-            border-radius: 8px;
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
         }
 
         .brand-text {
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             font-weight: 800;
             color: #3A86EF;
         }
@@ -68,28 +72,25 @@
         }
 
         .game-title-header {
-            font-size: 0.9rem;
+            font-size: 0.78rem;
             font-weight: 700;
             color: #FF6B00;
             background: #0B132B;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
             border: 1px solid #2A385B;
         }
 
         /* MAIN WRAPPER */
         .main-wrapper {
-            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             width: 100%;
-            padding: 0.5rem 1rem;
-            max-width: 650px;
+            max-width: 500px;
         }
 
-        /* TOP INFO BAR ABOVE MAIN CONTAINER */
+        /* TOP INFO BAR */
         .top-info-bar {
             width: 100%;
             display: flex;
@@ -97,15 +98,14 @@
             align-items: center;
             background-color: #1C2541;
             border: 1px solid #2A385B;
-            padding: 0.4rem 0.8rem;
-            border-radius: 12px;
+            padding: 0.4rem 0.6rem;
+            border-radius: 10px;
             margin-bottom: 0.5rem;
-            gap: 0.5rem;
-            flex-wrap: wrap;
+            gap: 0.4rem;
         }
 
         .creator-info {
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             color: #94A3B8;
             font-weight: 600;
         }
@@ -118,40 +118,33 @@
             background-color: #0B132B;
             color: #FF6B00;
             border: 1px solid #FF6B00;
-            padding: 0.25rem 0.5rem;
-            border-radius: 8px;
+            padding: 0.2rem 0.4rem;
+            border-radius: 6px;
             font-weight: 700;
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             outline: none;
             cursor: pointer;
         }
 
-        /* GAME CARD - SCROLLBAR REMOVED & NO OVERFLOW */
+        /* GAME CARD */
         .game-card {
             background-color: #1C2541;
             border: 2px solid #2A385B;
-            border-radius: 18px;
-            padding: 1rem;
+            border-radius: 16px;
+            padding: 0.8rem;
             width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
             position: relative;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
-            overflow: hidden;
-        }
-
-        .game-card::-webkit-scrollbar {
-            display: none;
-        }
-        .game-card {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
         }
 
         .top-controls {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 0.6rem;
         }
 
         .stats-bar {
@@ -159,10 +152,11 @@
             justify-content: space-around;
             align-items: center;
             background: #0B132B;
-            padding: 0.45rem 0.8rem;
+            padding: 0.4rem 0.5rem;
             border-radius: 10px;
-            margin-bottom: 0.8rem;
             border: 1px solid #2A385B;
+            flex-wrap: wrap;
+            gap: 0.3rem;
         }
 
         .stat-item {
@@ -172,15 +166,21 @@
 
         .stat-value {
             color: #FF6B00;
-            font-size: 1.05rem;
+            font-size: 1rem;
+        }
+
+        .level-value {
+            color: #34D399;
+            font-size: 1rem;
         }
 
         .timer-value {
             color: #3A86EF;
         }
 
+        /* DROP ZONE */
         .drop-zone {
-            min-height: 60px;
+            min-height: 75px;
             background-color: #0B132B;
             border: 2px dashed #3A86EF;
             border-radius: 12px;
@@ -190,44 +190,45 @@
             gap: 0.4rem;
             align-items: center;
             justify-content: center;
-            margin-bottom: 0.8rem;
         }
 
+        /* WORDS POOL */
         .words-pool {
             display: flex;
             flex-wrap: wrap;
-            gap: 0.4rem;
+            gap: 0.5rem;
             justify-content: center;
-            margin-bottom: 0.8rem;
-            min-height: 65px;
+            align-items: center;
+            padding: 0.4rem 0;
+            min-height: 90px;
         }
 
         .word-chip {
             background-color: #3A86EF;
             color: #FFF;
-            padding: 0.4rem 0.8rem;
+            padding: 0.55rem 1rem;
             border-radius: 25px;
-            font-weight: 700;
-            font-size: 0.85rem;
+            font-weight: 800;
+            font-size: 1.15rem;
             cursor: pointer;
             user-select: none;
-            transition: all 0.2s ease;
-            box-shadow: 0 3px 8px rgba(58, 134, 239, 0.3);
+            transition: all 0.15s ease;
+            box-shadow: 0 4px 10px rgba(58, 134, 239, 0.4);
         }
 
-        .word-chip:hover {
-            background-color: #FF6B00;
-            transform: scale(1.05);
+        .word-chip:active {
+            transform: scale(0.95);
         }
 
         .word-chip.selected {
             background-color: #FF6B00;
+            box-shadow: 0 4px 10px rgba(255, 107, 0, 0.4);
         }
 
         .btn {
             border: none;
-            padding: 0.5rem 1rem;
-            font-size: 0.85rem;
+            padding: 0.45rem 0.8rem;
+            font-size: 0.8rem;
             font-weight: 700;
             border-radius: 8px;
             cursor: pointer;
@@ -237,21 +238,21 @@
         .btn-start {
             background-color: #FF6B00;
             color: #FFF;
-            font-size: 0.95rem;
-            padding: 0.75rem 1.8rem;
+            font-size: 1rem;
+            padding: 0.8rem 2.2rem;
+            border-radius: 10px;
+            font-weight: 800;
         }
 
         .btn-check {
             background-color: #FF6B00;
             color: #FFF;
             width: 100%;
-            font-size: 0.9rem;
-            padding: 0.65rem;
+            font-size: 1rem;
+            padding: 0.7rem;
+            font-weight: 800;
+            border-radius: 10px;
             box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-        }
-
-        .btn-check:hover {
-            background-color: #E05E00;
         }
 
         .btn-pause {
@@ -273,7 +274,6 @@
         }
 
         .message-box {
-            margin-top: 0.5rem;
             font-size: 0.9rem;
             font-weight: bold;
             min-height: 20px;
@@ -286,14 +286,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(11, 19, 43, 0.97);
-            border-radius: 18px;
+            background-color: rgba(11, 19, 43, 0.98);
+            border-radius: 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             z-index: 10;
-            padding: 1rem;
+            padding: 1.2rem;
         }
 
         .overlay-screen h2 {
@@ -304,18 +304,43 @@
 
         .overlay-screen p {
             color: #94A3B8;
-            margin-bottom: 1.2rem;
+            margin-bottom: 0.8rem;
+            font-size: 0.85rem;
         }
 
+        .start-level-container {
+            margin: 0.8rem 0 1.2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .start-level-select {
+            background-color: #0B132B;
+            color: #34D399;
+            border: 2px solid #34D399;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* FOOTER DIRECTLY BELOW GAME CARD WITH SMALL GAP */
         footer {
-            height: 30px;
+            height: 25px;
             color: #64748B;
-            font-size: 0.75rem;
+            font-size: 0.72rem;
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            background-color: #0B132B;
+            max-width: 500px;
+            background-color: transparent;
+            margin-top: 0.8rem;
+            padding-bottom: 0.5rem;
         }
 
         footer strong {
@@ -328,7 +353,7 @@
     <!-- CLEAN NAVBAR WITH BRAND & GAME TITLE -->
     <nav class="navbar">
         <div class="brand-container" onclick="openHome()">
-             <img src="Logo.png" alt="English Spur Logo" style="width: 38px; height: 38px; border-radius: 8px;">
+            <div class="brand-logo">ES</div>
             <span class="brand-text">ENGLISH <span>SPUR</span></span>
         </div>
 
@@ -350,17 +375,30 @@
             </select>
 
             <div class="creator-info">
-                Created by <strong>Shovan Kapri</strong> &copy; 2026 | All Rights Reserved.
+                Created By <strong>শোভন কাপড়ী</strong> &copy; 2026
             </div>
         </div>
 
         <!-- MAIN PLAY CONTAINER -->
         <div class="game-card">
-            <!-- START OVERLAY SCREEN -->
+            <!-- START OVERLAY SCREEN WITH PRE-GAME LEVEL SELECTION -->
             <div class="overlay-screen" id="startOverlay">
                 <h2>⚡ Ready to Play? / প্রস্তুত তো?</h2>
-                <p id="savedProgressText" style="color: #3A86EF; font-weight: bold; margin-bottom: 0.8rem;"></p>
-                <button class="btn btn-start" onclick="startGame()">▶️ Continue / খেলা শুরু করো</button>
+                <p id="savedProgressText" style="color: #3A86EF; font-weight: bold;"></p>
+                
+                <div class="start-level-container">
+                    <label style="font-size: 0.85rem; color: #F8FAFC; font-weight: bold;">তোমার লেভেল নির্বাচন করো (Choose Level):</label>
+                    <select class="start-level-select" id="preGameLevelSelect" onchange="onPreGameLevelChange()">
+                        <option value="1">Lvl 1: Beginner (300 Sentences) | 30s</option>
+                        <option value="2">Lvl 2: Learner (500 Sentences) | 25s</option>
+                        <option value="3">Lvl 3: Fluent (1000 Sentences) | 20s</option>
+                        <option value="4">Lvl 4: Expert (1000 Sentences) | 18s</option>
+                        <option value="5">Lvl 5: Master (800 Sentences) | 15s</option>
+                        <option value="6">Lvl 6: Legend (1400 Sentences) | 12s</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-start" onclick="startGame()">▶️ Start Game / শুরু করো</button>
             </div>
 
             <!-- PAUSE OVERLAY SCREEN -->
@@ -370,9 +408,16 @@
                 <button class="btn btn-start" onclick="togglePause()">▶️ Resume Game / আবার শুরু করো</button>
             </div>
 
+            <!-- LEVEL UP OVERLAY SCREEN -->
+            <div class="overlay-screen" id="levelUpOverlay" style="display: none;">
+                <h2 style="color: #34D399;">🎉 LEVEL UP! / চমৎকার!</h2>
+                <p id="levelUpText" style="font-size: 1.05rem; color: #FFF; margin-bottom: 1rem;"></p>
+                <button class="btn btn-start" onclick="closeLevelUpOverlay()">🚀 Next Level / পরবর্তী লেভেল</button>
+            </div>
+
             <!-- TOP CONTROLS -->
             <div class="top-controls">
-                <button class="btn btn-clear-data" onclick="resetAllProgress()" title="Restart from Sentence 1">🗑️ Reset Progress</button>
+                <button class="btn btn-clear-data" onclick="resetAllProgress()" title="Restart from Sentence 1">🗑️ Restart All</button>
                 <div>
                     <button class="btn btn-reset" onclick="resetCurrentSentence()">🔄 Reset</button>
                     <button class="btn btn-pause" onclick="togglePause()">⏸️ Hold</button>
@@ -381,14 +426,15 @@
 
             <!-- STATS BAR -->
             <div class="stats-bar">
+                <div class="stat-item">লেভেল/Lvl: <span id="levelDisplay" class="stat-value level-value">1</span></div>
                 <div class="stat-item">স্কোর/Score: <span id="score" class="stat-value">0</span></div>
-                <div class="stat-item">বাক্য/Sentence: <span id="count" class="stat-value" style="color: #3A86EF;">1</span>/1000</div>
-                <div class="stat-item">সময়/Time: <span id="timer" class="stat-value timer-value">20</span>s</div>
+                <div class="stat-item">বাক্য/Sentence: <span id="count" class="stat-value" style="color: #3A86EF;">1</span>/<span id="totalSentenceInLevel">300</span></div>
+                <div class="stat-item">সময়/Time: <span id="timer" class="stat-value timer-value">30</span>s</div>
             </div>
 
             <!-- SELECTED WORDS ZONE -->
             <div class="drop-zone" id="dropZone">
-                <span id="placeholderText" style="color: #64748B; font-style: italic; font-size: 0.8rem;">শব্দগুলো নির্বাচন করো... / Select words here...</span>
+                <span id="placeholderText" style="color: #64748B; font-style: italic; font-size: 0.85rem;">শব্দগুলো নির্বাচন করো... / Select words here...</span>
             </div>
 
             <!-- WORDS POOL -->
@@ -396,14 +442,14 @@
 
             <!-- SUBMIT BUTTON -->
             <button class="btn btn-check" onclick="checkSentence()">🚀 Submit Answer / জমা দাও</button>
-
             <div class="message-box" id="messageBox"></div>
         </div>
-    </div>
 
-    <footer>
-        <p>&copy; 2026 <strong>English Spur</strong> | All Rights Reserved.</p>
-    </footer>
+        <!-- FOOTER MOVED DIRECTLY UNDER GAME CARD -->
+        <footer>
+            <p>&copy; 2026 <strong>English Spur</strong> | All Rights Reserved.</p>
+        </footer>
+    </div>
 
     <script>
         // AUDIO SYNTHESIZER ENGINE
@@ -451,6 +497,16 @@
                 gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
                 osc.start(now);
                 osc.stop(now + 0.4);
+            } else if (type === 'levelup') {
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(440, now);
+                osc.frequency.setValueAtTime(554.37, now + 0.1);
+                osc.frequency.setValueAtTime(659.25, now + 0.2);
+                osc.frequency.setValueAtTime(880, now + 0.3);
+                gain.gain.setValueAtTime(0.25, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                osc.start(now);
+                osc.stop(now + 0.5);
             }
         }
 
@@ -501,69 +557,124 @@
             }, tempo);
         }
 
-        // 1000 SENTENCES GENERATOR ENGINE
-        function generate1000Sentences() {
-            const subjects = ["I", "You", "We", "They", "He", "She", "Sovan Kapri", "The teacher", "The student", "English Spur"];
-            const verbs = ["love to learn", "always practice", "should improve", "want to speak", "enjoy studying", "will master", "need to write", "strive to practice", "learn to speak", "prepare to master"];
-            const topics = ["English grammar", "fluent English", "new vocabulary", "daily spoken English", "pronunciation skills", "active listening", "writing habits", "daily communication", "sentence building", "language mastery"];
-            const contexts = ["every single day.", "with total focus.", "to build confidence.", "step by step.", "for a bright future.", "without any fear.", "at English Spur.", "with great enthusiasm.", "to achieve fluency.", "with full consistency."];
-
-            const baseSentences = [
-                "Practice makes a man perfect.",
-                "English Spur will guide you to fluency.",
-                "Consistency is the key to mastering English.",
-                "Listen carefully and repeat the sentence.",
-                "Always believe in your learning process.",
-                "Small habits lead to big success.",
-                "Clear communication is a life skill.",
-                "Read books to improve your vocabulary.",
-                "Never hesitate to speak in English.",
-                "Hard work always pays off."
+        // 5000+ ACCURATE DATA ENGINE
+        function generate5000AccurateSentences() {
+            const pluralSubs = ["I", "You", "We", "They", "English Spur learners", "Students", "Young professionals", "Dedicated learners"];
+            const pluralVerbs = [
+                "read English books", "practice speaking daily", "listen to podcasts", "write short stories",
+                "study grammar rules", "learn new vocabulary", "build sentence structures", "improve pronunciation",
+                "watch video tutorials", "speak with full confidence", "attend daily classes", "solve practice quizzes"
             ];
 
-            let list = [...baseSentences];
+            const singSubs = ["He", "She", "Sovan Kapri", "The teacher", "The student", "The instructor", "My best friend"];
+            const singVerbs = [
+                "reads English books", "practices speaking daily", "listens to podcasts", "writes short stories",
+                "studies grammar rules", "learns new vocabulary", "builds sentence structures", "improves pronunciation",
+                "watches video tutorials", "speaks with full confidence", "attends daily classes", "solves practice quizzes"
+            ];
 
-            for (let s of subjects) {
-                for (let v of verbs) {
-                    for (let t of topics) {
-                        for (let c of contexts) {
-                            if (list.length < 1000) {
-                                list.push(`${s} ${v} ${t} ${c}`);
-                            }
+            const contexts = [
+                "every single day.", "in the classroom.", "every morning.", "step by step.", "with great enthusiasm.",
+                "for career success.", "without any hesitation.", "at English Spur.", "to achieve fluency.", "with total focus.",
+                "to gain knowledge.", "for future growth.", "with immense joy.", "at their own pace."
+            ];
+
+            let list = [
+                "Practice makes a man perfect.",
+                "English Spur helps you speak fluently.",
+                "Consistency is the secret to mastering English.",
+                "Always believe in your learning journey.",
+                "Small daily habits lead to huge success.",
+                "Clear communication opens up many doors.",
+                "Read English newspapers to boost vocabulary.",
+                "Never feel afraid of making mistakes.",
+                "Hard work always brings great results.",
+                "English is easy when you practice daily."
+            ];
+
+            for (let s of pluralSubs) {
+                for (let v of pluralVerbs) {
+                    for (let c of contexts) {
+                        if (list.length < 2500) {
+                            list.push(`${s} ${v} ${c}`);
                         }
                     }
                 }
             }
+
+            for (let s of singSubs) {
+                for (let v of singVerbs) {
+                    for (let c of contexts) {
+                        if (list.length < 5000) {
+                            list.push(`${s} ${v} ${c}`);
+                        }
+                    }
+                }
+            }
+
+            for (let i = list.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [list[i], list[j]] = [list[j], list[i]];
+            }
+
             return list;
         }
 
-        const sentenceBank = generate1000Sentences();
+        const sentenceBank = generate5000AccurateSentences();
 
         let currentSentenceIndex = 0;
         let score = 0;
-        let timeLeft = 20;
+        let timeLeft = 30;
         let timerInterval = null;
         let selectedWords = [];
         let isPaused = false;
         let gameStarted = false;
 
-        // LOCAL STORAGE FUNCTIONS FOR AUTO SAVE
+        const levelConfig = {
+            1: { name: "Beginner", timer: 30, min: 1, max: 300, total: 300 },
+            2: { name: "Learner", timer: 25, min: 301, max: 800, total: 500 },
+            3: { name: "Fluent", timer: 20, min: 801, max: 1800, total: 1000 },
+            4: { name: "Expert", timer: 18, min: 1801, max: 2800, total: 1000 },
+            5: { name: "Master", timer: 15, min: 2801, max: 3600, total: 800 },
+            6: { name: "Legend", timer: 12, min: 3601, max: 5000, total: 1400 }
+        };
+
+        function getLevelInfo(index) {
+            const sentenceNum = index + 1;
+            if (sentenceNum <= 300) return { level: 1, ...levelConfig[1] };
+            if (sentenceNum <= 800) return { level: 2, ...levelConfig[2] };
+            if (sentenceNum <= 1800) return { level: 3, ...levelConfig[3] };
+            if (sentenceNum <= 2800) return { level: 4, ...levelConfig[4] };
+            if (sentenceNum <= 3600) return { level: 5, ...levelConfig[5] };
+            return { level: 6, ...levelConfig[6] };
+        }
+
+        function onPreGameLevelChange() {
+            const selectedLvl = parseInt(document.getElementById('preGameLevelSelect').value, 10);
+            currentSentenceIndex = levelConfig[selectedLvl].min - 1;
+            saveState();
+        }
+
+        // LOCAL STORAGE
         function loadSavedState() {
             const savedScore = localStorage.getItem('es_puzzle_score');
             const savedIndex = localStorage.getItem('es_puzzle_index');
 
-            if (savedScore !== null) {
-                score = parseInt(savedScore, 10);
-            }
-            if (savedIndex !== null) {
-                currentSentenceIndex = parseInt(savedIndex, 10);
-            }
+            if (savedScore !== null) score = parseInt(savedScore, 10);
+            if (savedIndex !== null) currentSentenceIndex = parseInt(savedIndex, 10);
+
+            const levelInfo = getLevelInfo(currentSentenceIndex);
+            document.getElementById('preGameLevelSelect').value = levelInfo.level;
+
+            const relativeSentenceNum = (currentSentenceIndex + 1) - (levelInfo.min - 1);
 
             document.getElementById('score').innerText = score;
-            document.getElementById('count').innerText = currentSentenceIndex + 1;
+            document.getElementById('count').innerText = relativeSentenceNum;
+            document.getElementById('totalSentenceInLevel').innerText = levelInfo.total;
+            document.getElementById('levelDisplay').innerText = `${levelInfo.level} (${levelInfo.name})`;
 
             if (score > 0 || currentSentenceIndex > 0) {
-                document.getElementById('savedProgressText').innerText = `Welcome Back! Saved Score: ${score} | Sentence: ${currentSentenceIndex + 1}`;
+                document.getElementById('savedProgressText').innerText = `Welcome Back! Lvl: ${levelInfo.level} (${levelInfo.name}) | Score: ${score} | Sentence: ${relativeSentenceNum}/${levelInfo.total}`;
             } else {
                 document.getElementById('savedProgressText').innerText = "Arrange words in correct order to form the sentence.";
             }
@@ -581,7 +692,7 @@
                 score = 0;
                 currentSentenceIndex = 0;
                 saveState();
-                document.getElementById('score').innerText = score;
+                loadSavedState();
                 loadSentence();
             }
         }
@@ -596,10 +707,17 @@
             if (!gameStarted) return;
 
             clearInterval(timerInterval);
-            timeLeft = 20;
+
+            const levelInfo = getLevelInfo(currentSentenceIndex);
+            timeLeft = levelInfo.timer;
+
+            const relativeSentenceNum = (currentSentenceIndex + 1) - (levelInfo.min - 1);
+
             document.getElementById('timer').innerText = timeLeft;
-            document.getElementById('count').innerText = currentSentenceIndex + 1;
+            document.getElementById('count').innerText = relativeSentenceNum;
+            document.getElementById('totalSentenceInLevel').innerText = levelInfo.total;
             document.getElementById('score').innerText = score;
+            document.getElementById('levelDisplay').innerText = `${levelInfo.level} (${levelInfo.name})`;
             document.getElementById('messageBox').innerText = "";
             document.getElementById('messageBox').style.color = "";
             selectedWords = [];
@@ -658,7 +776,7 @@
             dropZone.innerHTML = "";
 
             if (selectedWords.length === 0) {
-                dropZone.innerHTML = '<span style="color: #64748B; font-style: italic; font-size: 0.8rem;">শব্দগুলো নির্বাচন করো... / Select words here...</span>';
+                dropZone.innerHTML = '<span style="color: #64748B; font-style: italic; font-size: 0.85rem;">শব্দগুলো নির্বাচন করো... / Select words here...</span>';
                 return;
             }
 
@@ -687,25 +805,39 @@
 
             if (userString === targetString) {
                 clearInterval(timerInterval);
-                playSound('correct');
                 score += 10;
-                currentSentenceIndex = (currentSentenceIndex + 1) % sentenceBank.length;
                 
-                // SAVE PROGRESS TO LOCAL STORAGE
+                const oldLevelInfo = getLevelInfo(currentSentenceIndex);
+                currentSentenceIndex = (currentSentenceIndex + 1) % sentenceBank.length;
+                const newLevelInfo = getLevelInfo(currentSentenceIndex);
+
                 saveState();
 
                 document.getElementById('score').innerText = score;
-                document.getElementById('messageBox').innerHTML = "🎉 চমৎকার! সঠিক উত্তর! (Brilliant! Correct Answer!)";
-                document.getElementById('messageBox').style.color = "#34D399";
 
-                setTimeout(() => {
-                    loadSentence();
-                }, 1500);
+                if (newLevelInfo.level > oldLevelInfo.level) {
+                    playSound('levelup');
+                    document.getElementById('levelUpText').innerText = `আপনি সফলভাবে Level ${newLevelInfo.level} (${newLevelInfo.name})-এ উন্নীত হয়েছেন!`;
+                    document.getElementById('levelUpOverlay').style.display = 'flex';
+                } else {
+                    playSound('correct');
+                    document.getElementById('messageBox').innerHTML = "🎉 চমৎকার! সঠিক উত্তর! (Brilliant! Correct Answer!)";
+                    document.getElementById('messageBox').style.color = "#34D399";
+                    setTimeout(() => {
+                        loadSentence();
+                    }, 1500);
+                }
+
             } else {
                 playSound('wrong');
                 document.getElementById('messageBox').innerHTML = "❌ ভুল হয়েছে! আবার চেষ্টা করো! (Wrong Order! Try Again!)";
                 document.getElementById('messageBox').style.color = "#EF4444";
             }
+        }
+
+        function closeLevelUpOverlay() {
+            document.getElementById('levelUpOverlay').style.display = 'none';
+            loadSentence();
         }
 
         function togglePause() {
@@ -719,7 +851,6 @@
             }
         }
 
-        // INITIALIZE SAVED STATE ON LOAD
         window.onload = function() {
             loadSavedState();
         };
