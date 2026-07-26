@@ -136,10 +136,9 @@
             position: relative;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             text-align: center;
-            overflow: hidden; /* Prevents Scrollbar completely */
+            overflow: hidden;
         }
 
-        /* Hide scrollbars across browsers */
         .game-card::-webkit-scrollbar {
             display: none;
         }
@@ -265,6 +264,14 @@
             color: #94A3B8;
         }
 
+        .btn-clear-data {
+            background-color: #ef4444;
+            color: #FFF;
+            font-size: 0.75rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+        }
+
         .message-box {
             margin-top: 0.5rem;
             font-size: 0.9rem;
@@ -321,8 +328,7 @@
     <!-- CLEAN NAVBAR WITH BRAND & GAME TITLE -->
     <nav class="navbar">
         <div class="brand-container" onclick="openHome()">
-            <!-- BRAND LOGO PLACEHOLDER: Replace <div class="brand-logo">ES</div> with <img src="logo.png" style="width: 36px; height: 36px;"> -->
-           <img src="Logo.png" alt="English Spur Logo" style="width: 38px; height: 38px; border-radius: 8px;">
+             <img src="Logo.png" alt="English Spur Logo" style="width: 38px; height: 38px; border-radius: 8px;">
             <span class="brand-text">ENGLISH <span>SPUR</span></span>
         </div>
 
@@ -344,7 +350,7 @@
             </select>
 
             <div class="creator-info">
-                Created by <strong> Shovan Kapri</strong> &copy; 2026 | All Rights Reserved.
+                Created by <strong>Shovan Kapri</strong> &copy; 2026 | All Rights Reserved.
             </div>
         </div>
 
@@ -353,8 +359,8 @@
             <!-- START OVERLAY SCREEN -->
             <div class="overlay-screen" id="startOverlay">
                 <h2>⚡ Ready to Play? / প্রস্তুত তো?</h2>
-                <p>শব্দগুলো সঠিক ক্রমানুসারে সাজিয়ে বাক্যটি তৈরি করো। <br> <span style="font-size: 0.8rem; color: #3A86EF;">(Arrange words in correct order to form the sentence.)</span></p>
-                <button class="btn btn-start" onclick="startGame()">▶️ Start Game / খেলা শুরু করো</button>
+                <p id="savedProgressText" style="color: #3A86EF; font-weight: bold; margin-bottom: 0.8rem;"></p>
+                <button class="btn btn-start" onclick="startGame()">▶️ Continue / খেলা শুরু করো</button>
             </div>
 
             <!-- PAUSE OVERLAY SCREEN -->
@@ -366,7 +372,7 @@
 
             <!-- TOP CONTROLS -->
             <div class="top-controls">
-                <span style="color: #3A86EF; font-weight: bold; font-size: 0.85rem;">Speed Builder</span>
+                <button class="btn btn-clear-data" onclick="resetAllProgress()" title="Restart from Sentence 1">🗑️ Reset Progress</button>
                 <div>
                     <button class="btn btn-reset" onclick="resetCurrentSentence()">🔄 Reset</button>
                     <button class="btn btn-pause" onclick="togglePause()">⏸️ Hold</button>
@@ -541,12 +547,48 @@
         let isPaused = false;
         let gameStarted = false;
 
+        // LOCAL STORAGE FUNCTIONS FOR AUTO SAVE
+        function loadSavedState() {
+            const savedScore = localStorage.getItem('es_puzzle_score');
+            const savedIndex = localStorage.getItem('es_puzzle_index');
+
+            if (savedScore !== null) {
+                score = parseInt(savedScore, 10);
+            }
+            if (savedIndex !== null) {
+                currentSentenceIndex = parseInt(savedIndex, 10);
+            }
+
+            document.getElementById('score').innerText = score;
+            document.getElementById('count').innerText = currentSentenceIndex + 1;
+
+            if (score > 0 || currentSentenceIndex > 0) {
+                document.getElementById('savedProgressText').innerText = `Welcome Back! Saved Score: ${score} | Sentence: ${currentSentenceIndex + 1}`;
+            } else {
+                document.getElementById('savedProgressText').innerText = "Arrange words in correct order to form the sentence.";
+            }
+        }
+
+        function saveState() {
+            localStorage.setItem('es_puzzle_score', score);
+            localStorage.setItem('es_puzzle_index', currentSentenceIndex);
+        }
+
+        function resetAllProgress() {
+            if (confirm("আপনি কি নতুন করে ১ নম্বর বাক্য থেকে গেম শুরু করতে চান? (Do you want to restart from Sentence 1?)")) {
+                localStorage.removeItem('es_puzzle_score');
+                localStorage.removeItem('es_puzzle_index');
+                score = 0;
+                currentSentenceIndex = 0;
+                saveState();
+                document.getElementById('score').innerText = score;
+                loadSentence();
+            }
+        }
+
         function startGame() {
             gameStarted = true;
             document.getElementById('startOverlay').style.display = 'none';
-            score = 0;
-            currentSentenceIndex = 0;
-            document.getElementById('score').innerText = score;
             loadSentence();
         }
 
@@ -557,6 +599,7 @@
             timeLeft = 20;
             document.getElementById('timer').innerText = timeLeft;
             document.getElementById('count').innerText = currentSentenceIndex + 1;
+            document.getElementById('score').innerText = score;
             document.getElementById('messageBox').innerText = "";
             document.getElementById('messageBox').style.color = "";
             selectedWords = [];
@@ -646,12 +689,16 @@
                 clearInterval(timerInterval);
                 playSound('correct');
                 score += 10;
+                currentSentenceIndex = (currentSentenceIndex + 1) % sentenceBank.length;
+                
+                // SAVE PROGRESS TO LOCAL STORAGE
+                saveState();
+
                 document.getElementById('score').innerText = score;
                 document.getElementById('messageBox').innerHTML = "🎉 চমৎকার! সঠিক উত্তর! (Brilliant! Correct Answer!)";
                 document.getElementById('messageBox').style.color = "#34D399";
 
                 setTimeout(() => {
-                    currentSentenceIndex = (currentSentenceIndex + 1) % sentenceBank.length;
                     loadSentence();
                 }, 1500);
             } else {
@@ -671,6 +718,11 @@
                 overlay.style.display = "none";
             }
         }
+
+        // INITIALIZE SAVED STATE ON LOAD
+        window.onload = function() {
+            loadSavedState();
+        };
     </script>
 </body>
 </html>
