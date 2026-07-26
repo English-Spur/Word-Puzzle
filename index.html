@@ -24,7 +24,7 @@
             overflow-x: hidden;
         }
 
-        /* CLEAN NAVBAR WITH BRAND & GAME TITLE */
+        /* CLEAN NAVBAR */
         .navbar {
             width: 100%;
             max-width: 500px;
@@ -81,7 +81,6 @@
             border: 1px solid #2A385B;
         }
 
-        /* MAIN WRAPPER */
         .main-wrapper {
             display: flex;
             flex-direction: column;
@@ -90,7 +89,6 @@
             max-width: 500px;
         }
 
-        /* TOP INFO BAR */
         .top-info-bar {
             width: 100%;
             display: flex;
@@ -126,7 +124,6 @@
             cursor: pointer;
         }
 
-        /* GAME CARD */
         .game-card {
             background-color: #1C2541;
             border: 2px solid #2A385B;
@@ -178,7 +175,6 @@
             color: #3A86EF;
         }
 
-        /* DROP ZONE */
         .drop-zone {
             min-height: 75px;
             background-color: #0B132B;
@@ -192,7 +188,6 @@
             justify-content: center;
         }
 
-        /* WORDS POOL */
         .words-pool {
             display: flex;
             flex-wrap: wrap;
@@ -244,15 +239,43 @@
             font-weight: 800;
         }
 
+        .action-btn-group {
+            display: flex;
+            gap: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-hint {
+            background-color: #eab308;
+            color: #000;
+            font-size: 0.95rem;
+            padding: 0.7rem;
+            font-weight: 800;
+            border-radius: 10px;
+            flex: 1;
+        }
+
         .btn-check {
             background-color: #FF6B00;
             color: #FFF;
-            width: 100%;
             font-size: 1rem;
             padding: 0.7rem;
             font-weight: 800;
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
+            flex: 3;
+        }
+
+        .btn-next {
+            background-color: #10B981;
+            color: #FFF;
+            width: 100%;
+            font-size: 1.05rem;
+            padding: 0.75rem;
+            font-weight: 800;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+            display: none;
         }
 
         .btn-pause {
@@ -279,7 +302,6 @@
             min-height: 20px;
         }
 
-        /* OVERLAYS */
         .overlay-screen {
             position: absolute;
             top: 0;
@@ -328,7 +350,6 @@
             cursor: pointer;
         }
 
-        /* FOOTER DIRECTLY BELOW GAME CARD WITH SMALL GAP */
         footer {
             height: 25px;
             color: #64748B;
@@ -350,10 +371,9 @@
 </head>
 <body>
 
-    <!-- CLEAN NAVBAR WITH BRAND & GAME TITLE -->
     <nav class="navbar">
         <div class="brand-container" onclick="openHome()">
-  <img src="Logo.png" alt="English Spur Logo" style="width: 38px; height: 38px; border-radius: 8px;">
+            <img src="Logo.png" alt="English Spur Logo" style="width: 38px; height: 38px; border-radius: 8px;">
             <span class="brand-text">ENGLISH <span>SPUR</span></span>
         </div>
 
@@ -362,10 +382,8 @@
         </div>
     </nav>
 
-    <!-- MAIN GAME WRAPPER -->
     <div class="main-wrapper">
 
-        <!-- TOP INFO BAR ABOVE MAIN CONTAINER -->
         <div class="top-info-bar">
             <select class="bgm-select" id="bgmSelector" onchange="changeBGM()">
                 <option value="none">🔇 BGM: Off</option>
@@ -375,13 +393,11 @@
             </select>
 
             <div class="creator-info">
-              Created By <strong> Shovan Kapri</strong> &copy; 2026 | All rights reserved
+                Created By <strong>Shovan Kapri</strong> 
             </div>
         </div>
 
-        <!-- MAIN PLAY CONTAINER -->
         <div class="game-card">
-            <!-- START OVERLAY SCREEN WITH PRE-GAME LEVEL SELECTION -->
             <div class="overlay-screen" id="startOverlay">
                 <h2>⚡ Ready to Play? / প্রস্তুত তো?</h2>
                 <p id="savedProgressText" style="color: #3A86EF; font-weight: bold;"></p>
@@ -401,21 +417,18 @@
                 <button class="btn btn-start" onclick="startGame()">▶️ Start Game / শুরু করো</button>
             </div>
 
-            <!-- PAUSE OVERLAY SCREEN -->
             <div class="overlay-screen" id="pauseOverlay" style="display: none;">
                 <h2>⏸️ GAME PAUSED / খেলা স্থগিত</h2>
                 <p>আপনার স্কোর এবং লেভেল সুরক্ষিত রয়েছে। <br> <span style="font-size: 0.8rem; color: #3A86EF;">(Your score and progress are safe.)</span></p>
                 <button class="btn btn-start" onclick="togglePause()">▶️ Resume Game / আবার শুরু করো</button>
             </div>
 
-            <!-- LEVEL UP OVERLAY SCREEN -->
             <div class="overlay-screen" id="levelUpOverlay" style="display: none;">
                 <h2 style="color: #34D399;">🎉 LEVEL UP! / চমৎকার!</h2>
                 <p id="levelUpText" style="font-size: 1.05rem; color: #FFF; margin-bottom: 1rem;"></p>
                 <button class="btn btn-start" onclick="closeLevelUpOverlay()">🚀 Next Level / পরবর্তী লেভেল</button>
             </div>
 
-            <!-- TOP CONTROLS -->
             <div class="top-controls">
                 <button class="btn btn-clear-data" onclick="resetAllProgress()" title="Restart from Sentence 1">🗑️ Restart All</button>
                 <div>
@@ -424,7 +437,6 @@
                 </div>
             </div>
 
-            <!-- STATS BAR -->
             <div class="stats-bar">
                 <div class="stat-item">লেভেল/Lvl: <span id="levelDisplay" class="stat-value level-value">1</span></div>
                 <div class="stat-item">স্কোর/Score: <span id="score" class="stat-value">0</span></div>
@@ -432,27 +444,30 @@
                 <div class="stat-item">সময়/Time: <span id="timer" class="stat-value timer-value">30</span>s</div>
             </div>
 
-            <!-- SELECTED WORDS ZONE -->
             <div class="drop-zone" id="dropZone">
                 <span id="placeholderText" style="color: #64748B; font-style: italic; font-size: 0.85rem;">শব্দগুলো নির্বাচন করো... / Select words here...</span>
             </div>
 
-            <!-- WORDS POOL -->
             <div class="words-pool" id="wordsPool"></div>
 
-            <!-- SUBMIT BUTTON -->
-            <button class="btn btn-check" onclick="checkSentence()">🚀 Submit Answer / জমা দাও</button>
+            <!-- ACTION BUTTONS -->
+            <div class="action-btn-group" id="actionBtnGroup">
+                <button class="btn btn-hint" onclick="getHint()" title="-2 Points Deducted">💡 Hint (-2)</button>
+                <button class="btn btn-check" onclick="checkSentence()">🚀 Submit / জমা দাও</button>
+            </div>
+            
+            <button class="btn btn-next" id="nextBtn" onclick="nextSentence()">Next Sentence ➔ / পরবর্তী বাক্য</button>
+
             <div class="message-box" id="messageBox"></div>
         </div>
 
-        <!-- FOOTER MOVED DIRECTLY UNDER GAME CARD -->
         <footer>
-            <p>&copy; 2026 <strong>English Spur</strong> | 📞 9875340842</p>
+            <p>&copy; 2026 <strong>English Spur</strong> | All Rights Reserved | 📞 9875340842 & 8158874131</p>
+
         </footer>
     </div>
 
     <script>
-        // AUDIO SYNTHESIZER ENGINE
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playSound(type) {
@@ -510,7 +525,6 @@
             }
         }
 
-        // BACKGROUND MUSIC GENERATOR
         let bgmInterval = null;
         let bgmNoteIndex = 0;
 
@@ -557,7 +571,6 @@
             }, tempo);
         }
 
-        // 5000+ ACCURATE DATA ENGINE
         function generate5000AccurateSentences() {
             const pluralSubs = ["I", "You", "We", "They", "English Spur learners", "Students", "Young professionals", "Dedicated learners"];
             const pluralVerbs = [
@@ -655,7 +668,6 @@
             saveState();
         }
 
-        // LOCAL STORAGE
         function loadSavedState() {
             const savedScore = localStorage.getItem('es_puzzle_score');
             const savedIndex = localStorage.getItem('es_puzzle_index');
@@ -707,6 +719,9 @@
             if (!gameStarted) return;
 
             clearInterval(timerInterval);
+
+            document.getElementById('actionBtnGroup').style.display = 'flex';
+            document.getElementById('nextBtn').style.display = 'none';
 
             const levelInfo = getLevelInfo(currentSentenceIndex);
             timeLeft = levelInfo.timer;
@@ -797,6 +812,32 @@
             updateDropZone();
         }
 
+        // PERFECTED HINT ENGINE
+        function getHint() {
+            if (isPaused || !gameStarted) return;
+
+            const targetWords = sentenceBank[currentSentenceIndex].split(" ");
+            const currentSelectedCount = selectedWords.length;
+
+            if (currentSelectedCount >= targetWords.length) return;
+
+            const nextCorrectWord = targetWords[currentSelectedCount];
+
+            const poolChips = Array.from(document.querySelectorAll('#wordsPool .word-chip'));
+            const matchingChip = poolChips.find(chip => chip.innerText.trim() === nextCorrectWord.trim() && chip.style.visibility !== 'hidden');
+
+            if (matchingChip) {
+                if (score >= 2) {
+                    score -= 2;
+                } else {
+                    score = 0;
+                }
+                saveState();
+                document.getElementById('score').innerText = score;
+                selectWord(matchingChip, nextCorrectWord);
+            }
+        }
+
         function checkSentence() {
             if (isPaused || !gameStarted) return;
 
@@ -806,32 +847,36 @@
             if (userString === targetString) {
                 clearInterval(timerInterval);
                 score += 10;
-                
-                const oldLevelInfo = getLevelInfo(currentSentenceIndex);
-                currentSentenceIndex = (currentSentenceIndex + 1) % sentenceBank.length;
-                const newLevelInfo = getLevelInfo(currentSentenceIndex);
-
                 saveState();
 
                 document.getElementById('score').innerText = score;
+                document.getElementById('messageBox').innerHTML = "🎉 চমৎকার! সঠিক উত্তর! Next বাটনে ক্লিক করো।";
+                document.getElementById('messageBox').style.color = "#34D399";
 
-                if (newLevelInfo.level > oldLevelInfo.level) {
-                    playSound('levelup');
-                    document.getElementById('levelUpText').innerText = `আপনি সফলভাবে Level ${newLevelInfo.level} (${newLevelInfo.name})-এ উন্নীত হয়েছেন!`;
-                    document.getElementById('levelUpOverlay').style.display = 'flex';
-                } else {
-                    playSound('correct');
-                    document.getElementById('messageBox').innerHTML = "🎉 চমৎকার! সঠিক উত্তর! (Brilliant! Correct Answer!)";
-                    document.getElementById('messageBox').style.color = "#34D399";
-                    setTimeout(() => {
-                        loadSentence();
-                    }, 1500);
-                }
+                document.getElementById('actionBtnGroup').style.display = 'none';
+                document.getElementById('nextBtn').style.display = 'block';
 
             } else {
                 playSound('wrong');
-                document.getElementById('messageBox').innerHTML = "❌ ভুল হয়েছে! আবার চেষ্টা করো! (Wrong Order! Try Again!)";
+                document.getElementById('messageBox').innerHTML = "❌ ভুল হয়েছে! আবার চেষ্টা করো!";
                 document.getElementById('messageBox').style.color = "#EF4444";
+            }
+        }
+
+        function nextSentence() {
+            playSound('correct');
+            const oldLevelInfo = getLevelInfo(currentSentenceIndex);
+            currentSentenceIndex = (currentSentenceIndex + 1) % sentenceBank.length;
+            const newLevelInfo = getLevelInfo(currentSentenceIndex);
+
+            saveState();
+
+            if (newLevelInfo.level > oldLevelInfo.level) {
+                playSound('levelup');
+                document.getElementById('levelUpText').innerText = `আপনি সফলভাবে Level ${newLevelInfo.level} (${newLevelInfo.name})-এ উন্নীত হয়েছেন!`;
+                document.getElementById('levelUpOverlay').style.display = 'flex';
+            } else {
+                loadSentence();
             }
         }
 
